@@ -8,7 +8,7 @@ uploaded_file = st.file_uploader(
     type=["pdf"]
 )
 
-if uploaded_file:
+if uploaded_file is not None:
     document = pymupdf.open(
         stream=uploaded_file.read(),
         filetype="pdf"
@@ -21,8 +21,9 @@ if uploaded_file:
 "
 
     if text.strip():
+        st.subheader("Extracted Telugu Text")
         st.text_area(
-            "Extracted Telugu text",
+            "Text preview",
             text,
             height=400
         )
