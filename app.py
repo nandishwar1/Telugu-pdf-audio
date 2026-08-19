@@ -9,18 +9,20 @@ uploaded_file = st.file_uploader(
 )
 
 if uploaded_file is not None:
+    pdf_data = uploaded_file.read()
     document = pymupdf.open(
-        stream=uploaded_file.read(),
+        stream=pdf_data,
         filetype="pdf"
     )
 
-    text = ""
+    page_text = []
 
     for page in document:
-        text += page.get_text() + "
-"
+        page_text.append(page.get_text())
 
-    if text.strip():
+    text = " ".join(page_text).strip()
+
+    if text:
         st.subheader("Extracted Telugu Text")
         st.text_area(
             "Text preview",
